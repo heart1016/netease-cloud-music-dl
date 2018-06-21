@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: netease-cloud-music-dl
+Version: 0.2.0
+Summary: Netease cloud music song downloader, with full ID3 metadata!
+Home-page: https://github.com/codezjx/netease-cloud-music-dl
+Author: codezjx
+Author-email: code.zjx@gmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: ncm,netease,cloud-music,downloader
+Platform: UNKNOWN
