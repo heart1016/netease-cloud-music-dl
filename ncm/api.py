@@ -159,16 +159,16 @@ class CloudApi(object):
 		try:
 			url = get_lrc_url(lrc_id)
 			lyric = self.get_request(url)
-			if 'nolyric' in lyric or 'uncollected' in lyric or lyric['tlyric']['lyric'] is None:
+			if 'nolyric' in lyric or 'uncollected' in lyric or lyric['tlyric']['version'] == 0 or lyric['tlyric']['lyric'] is None:
 				return "no tran lrc"
 			else:
 				return lyric['tlyric']['lyric']
 		except:
-			print('get_lrc_sleep sleep 10 seconds')
+			print('get_lrc_tran_sleep sleep 10 seconds')
 			time.sleep(10)
 			url = get_lrc_url(lrc_id)
 			lyric = self.get_request(url)
-			if 'nolyric' in lyric or 'uncollected' in lyric or lyric['tlyric']['lyric'] is None:
+			if 'nolyric' in lyric or 'uncollected' in lyric or lyric['tlyric']['version'] == 0 or lyric['tlyric']['lyric'] is None:
 				return "no tran lrc"
 			else:
 				return lyric['tlyric']['lyric']
