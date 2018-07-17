@@ -12,7 +12,7 @@
 
 首先下载源码：
 ```bash
-$ git clone https://github.com/codezjx/netease-cloud-music-dl.git
+$ https://github.com/heart1016/netease-cloud-music-dl
 ```
 
 进入根目录，然后执行：
@@ -42,6 +42,8 @@ Finished processing dependencies for netease-cloud-music-dl==x.x.x
 - 支持下载歌手热门单曲（可配置最大下载数）
 - 支持下载专辑所有歌曲
 - 支持下载公开歌单所有歌曲
+- 支持下载lrc歌词英文歌曲翻译也会保存到lrc
+- 支持下载所有类别的所有歌单 也可以按自己需求更改test.py 实现下载一个类别的所有歌单 或是自定义歌单数量
 
 **（注意：已下架的音乐暂时无法下载）**
 
@@ -49,7 +51,7 @@ Finished processing dependencies for netease-cloud-music-dl==x.x.x
 ```
 $ ncm -h
 usage: ncm [-h] [-s song_id] [-ss song_ids [song_ids ...]] [-hot artist_id]
-           [-a album_id] [-p playlist_id]
+           [-a album_id] [-p playlist_id] [-hp [all_playlist]]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -100,7 +102,7 @@ $ ncm -hot http://music.163.com/#/artist?id=123123
 
 使用参数`-p`，后加歌单id或者完整url，使用方法同上，必须确认是**公开**的歌单才能下载哦。
 
-### 下载所有类别的所有歌单 也可以下载某个类别的所有歌单 很多 可以在test.py 按照自己需求更改
+### 下载所有类别的所有歌单 也可以下载某个类别的所有歌单 可以在test.py 按照自己需求更改
 
 使用参数`-hp`，直接执行 不需要加任何参数即可 默认类别只有一个 是华语 歌单数为3
 
