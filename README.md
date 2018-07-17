@@ -59,6 +59,8 @@ optional arguments:
   -hot artist_id        Download an artist hot 50 songs by artist_id
   -a album_id           Download an album all songs by album_id
   -p playlist_id        Download a playlist all songs by playlist_id
+  -hp [all_playlist]    Download all playlist
+
 ```
 
 ## Usage
@@ -97,6 +99,10 @@ $ ncm -hot http://music.163.com/#/artist?id=123123
 ### 下载某个公开的歌单
 
 使用参数`-p`，后加歌单id或者完整url，使用方法同上，必须确认是**公开**的歌单才能下载哦。
+
+### 下载所有类别的所有歌单 也可以下载某个类别的所有歌单 很多 可以在test.py 按照自己需求更改
+
+使用参数`-hp`，直接执行 不需要加任何参数即可 默认类别只有一个 是华语 歌单数为3
 
 ## Settings
 
