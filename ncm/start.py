@@ -4,7 +4,6 @@ import os
 import urllib3
 import requests
 import re
-import execjs
 from lxml import etree
 from pprint import pprint
 
