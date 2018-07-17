@@ -126,7 +126,9 @@ class CloudApi(object):
 
 	def get_playlist_songs(self, playlist_id):
 		try:
+			print(playlist_id)
 			url = get_playlist_url(playlist_id)
+			print(url)
 			result = self.get_request(url)
 			return result['result']['tracks'], result['result']['name']
 		except:
@@ -172,6 +174,8 @@ class CloudApi(object):
 				return "no tran lrc"
 			else:
 				return lyric['tlyric']['lyric']
+
+
 '''
 def get_lrc_zh(self, lrc_id):
 	url = get_lrc_url(lrc_id)

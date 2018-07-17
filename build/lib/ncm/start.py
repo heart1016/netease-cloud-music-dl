@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
+import urllib3
+import requests
+import re
+import execjs
+from lxml import etree
+from pprint import pprint
 
 from urllib.parse import urlparse, parse_qs
 from ncm import config
@@ -8,10 +14,12 @@ from ncm.api import CloudApi
 from ncm.downloader import download_song_by_id
 from ncm.downloader import download_song_by_song
 from ncm.downloader import format_string
+from ncm.test import WangYiYunSpider
 
 # load the config first
 config.load_config()
 api = CloudApi()
+test = WangYiYunSpider()
 
 
 def download_hot_songs(artist_id):
@@ -42,6 +50,11 @@ def download_playlist_songs(playlist_id):
         download_song_by_song(song, folder_path, False)
 
 
+def download_all_playlist():
+    ret = test.run()
+    for i in ret:
+        download_playlist_songs(i[33:])
+
 def get_parse_id(song_id):
     # Parse the url
     if song_id.startswith('http'):
@@ -62,6 +75,8 @@ def main():
                         help='Download an album all songs by album_id')
     parser.add_argument('-p', metavar='playlist_id', dest='playlist_id',
                         help='Download a playlist all songs by playlist_id')
+    parser.add_argument('-hp', metavar='all_playlist', dest='all_playlist', nargs='?', const='all_playlist',
+                        help='Download all playlist')
     args = parser.parse_args()
     if args.song_id:
         download_song_by_id(get_parse_id(args.song_id), config.DOWNLOAD_DIR)
@@ -74,7 +89,8 @@ def main():
         download_album_songs(get_parse_id(args.album_id))
     elif args.playlist_id:
         download_playlist_songs(get_parse_id(args.playlist_id))
-
+    elif args.all_playlist:
+        download_all_playlist()
 
 if __name__ == '__main__':
     main()

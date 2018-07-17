@@ -33,3 +33,4 @@ def get_playlist_url(playlist_id):
 
 def get_lrc_url(lrc_id):
     return 'http://music.163.com/api/song/lyric?' + 'id=' + format(lrc_id) + '&lv=1&kv=1&tv=-1'
+
