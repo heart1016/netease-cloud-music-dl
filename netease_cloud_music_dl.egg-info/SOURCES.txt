@@ -8,7 +8,6 @@ ncm/downloader.py
 ncm/encrypt.py
 ncm/file_util.py
 ncm/start.py
-ncm/test.py
 netease_cloud_music_dl.egg-info/PKG-INFO
 netease_cloud_music_dl.egg-info/SOURCES.txt
 netease_cloud_music_dl.egg-info/dependency_links.txt

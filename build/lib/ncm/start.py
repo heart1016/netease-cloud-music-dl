@@ -4,22 +4,20 @@ import os
 import urllib3
 import requests
 import re
-import execjs
 from lxml import etree
 from pprint import pprint
 
 from urllib.parse import urlparse, parse_qs
 from ncm import config
 from ncm.api import CloudApi
+from ncm.api import WangYiYunSpider
 from ncm.downloader import download_song_by_id
 from ncm.downloader import download_song_by_song
 from ncm.downloader import format_string
-from ncm.test import WangYiYunSpider
 
 # load the config first
 config.load_config()
 api = CloudApi()
-test = WangYiYunSpider()
 
 
 def download_hot_songs(artist_id):
@@ -51,7 +49,8 @@ def download_playlist_songs(playlist_id):
 
 
 def download_all_playlist():
-    ret = test.run()
+    spider = WangYiYunSpider()
+    ret = spider.run()
     for i in ret:
         download_playlist_songs(i[33:])
 
