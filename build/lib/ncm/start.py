@@ -14,6 +14,7 @@ from ncm.api import WangYiYunSpider
 from ncm.downloader import download_song_by_id
 from ncm.downloader import download_song_by_song
 from ncm.downloader import format_string
+from ncm.downloader import download_file
 
 # load the config first
 config.load_config()
@@ -39,14 +40,22 @@ def download_album_songs(album_id):
         download_song_by_song(song, folder_path, False)
 
 
+cover_list = []
 def download_playlist_songs(playlist_id):
     songs, playlist_name = api.get_playlist_songs(playlist_id)
+    #coverImage, commentThreadId = api.get_playlist_songs(playlist_id)
+    #print(coverImage)
+    #if coverImage in cover_list:
+    #    print('repeat')
+    #else:
+    #    cover_list.append(coverImage)
     folder_name = format_string(playlist_name) + ' - playlist'
     folder_path = os.path.join(config.DOWNLOAD_DIR, folder_name)
+    #filename = '{}.jpg'.format(commentThreadId)
     for i, song in enumerate(songs):
         print('{}: {}'.format(i + 1, song['name']))
         download_song_by_song(song, folder_path, False)
-
+        #download_file(coverImage, filename, folder_path)
 
 def download_all_playlist():
     spider = WangYiYunSpider()
@@ -54,12 +63,14 @@ def download_all_playlist():
     for i in ret:
         download_playlist_songs(i[33:])
 
+
 def get_parse_id(song_id):
     # Parse the url
     if song_id.startswith('http'):
         # Not allow fragments, we just need to parse the query string
         return parse_qs(urlparse(song_id, allow_fragments=False).query)['id'][0]
     return song_id
+
 
 
 def main():

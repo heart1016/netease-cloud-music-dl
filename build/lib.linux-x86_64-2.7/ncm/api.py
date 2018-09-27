@@ -5,12 +5,10 @@ import time
 import http
 import urllib3
 import os
-import re
 from lxml import etree
 import json
 import random
 from collections import OrderedDict
-from fake_useragent import UserAgent
 
 from ncm.encrypt import encrypted_request
 from ncm.constants import headers
@@ -21,7 +19,6 @@ from ncm.constants import get_artist_url
 from ncm.constants import get_playlist_url
 from ncm.constants import get_lrc_url
 
-proxies={"http":"http://127.0.0.1:8118"}
 
 
 class CloudApi(object):
@@ -139,7 +136,6 @@ class CloudApi(object):
 			print(url)
 			result = self.get_request(url)
 			return result['result']['tracks'], result['result']['name']
-			#return result['result']['coverImgUrl'], result['result']['commentThreadId']
 		except:
 			print('get_playlist_songs sleep 10 seconds')
 			time.sleep(10)
@@ -211,7 +207,8 @@ class WangYiYunSpider:
         self.class_url = 'http://music.163.com/discover/playlist/?cat={}'
         self.class_url_list = []  # 所有小类url
         self.playlist_urls = []  # 每一小类所有歌单的url
-        self.headers = headers
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         self.playlist_info = []
         self.classname = ''
 
@@ -253,15 +250,12 @@ class WangYiYunSpider:
         else:
             return self.root_url + next_url
 
-
     def get_playlist_info(self):
         # 循环请求歌单详情
         playlist = []
         info_dict = {}
         for url in self.playlist_urls:
             # 请求url 获取网页
-            if '2316571058' in url:
-                continue
             url = self.root_url + url
             playlist.append(url)
             print(url)
@@ -300,15 +294,8 @@ class WangYiYunSpider:
 
     def save_palylist_info(self):
         '''保存歌单信息'''
-        if re.search('\/', self.classname):
-            self.classname = re.sub(r'\/', ' ', self.classname)
-            with open('{}.json'.format(self.classname), 'a', encoding='utf-8') as f:
-                f.write(json.dumps(self.playlist_info, ensure_ascii=False, indent=4))
-                self.playlist_info = []
-        else:
-            with open('{}.json'.format(self.classname), 'a', encoding='utf-8') as f:
-                f.write(json.dumps(self.playlist_info, ensure_ascii=False, indent=4))
-                self.playlist_info = []
+        with open('{}.json'.format(self.classname), 'a', encoding='utf-8') as f:
+            f.write(json.dumps(self.playlist_info, ensure_ascii=False, indent=4))
 
     def run(self):
         '''程序运行主逻辑'''
@@ -333,19 +320,13 @@ class WangYiYunSpider:
         没首歌在歌单里一个字段
         '''
         for url in self.class_url_list:
-            self.classname = url[44:]
-            print(self.classname)
-
-            if re.search('R&B/Soul', url):
-                url = re.sub(url[44:], 'R%26B%2FSoul', url)
             print(url)
-
             # 请求小类url
             html_str = self.parse_url(url=url)
             html = etree.HTML(html_str)
             # 小类名 作为文件名
             #print(html)
-            #self.classname = html.xpath('//span[@class="f-ff2 d-flag"]/text()')[0]
+            self.classname = html.xpath('//span[@class="f-ff2 d-flag"]/text()')[0]
             #print(self.classname)
 
             # 　获取歌单链接及下一页url

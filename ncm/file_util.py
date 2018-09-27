@@ -3,10 +3,25 @@
 from mutagen.mp3 import MP3, HeaderNotFoundError
 from mutagen.id3 import ID3, APIC, TPE1, TIT2, TALB, error
 from PIL import Image
+#from osgeo import gdal
+#import numpy as np
 
 
-def resize_img(file_path, max_size=(640, 640), quality=90):
+def resize_img(file_path, max_size=(800, 800), quality=90):
     try:
+        """
+        img = gdal.Open(file_path)
+        r = img.GetRasterBand(1)
+        g = img.GetRasterBand(2)
+        b = img.GetRasterBand(3)
+        xx = 50
+        yy = 50
+        data1 = r.ReadAsArray(0, 0,xx, yy)
+        data2 = g.ReadAsArray(0, 0,xx, yy)
+        data3 = b.ReadAsArray(0, 0,xx, yy)
+        data =  np.dstack([data1, data2, data3])
+        img = Image.fromarray(data)
+        """
         img = Image.open(file_path)
         img = img.convert('RGB')
     except IOError:

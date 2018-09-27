@@ -4,14 +4,12 @@ import os
 import re
 import requests
 
-
 from ncm import config
 from ncm.api import CloudApi
 from ncm.file_util import add_metadata_to_song
 from ncm.file_util import resize_img
-from skimage import transform,io
 
-url_list = []
+
 def download_song_by_id(song_id, download_folder, sub_folder=True):
     # get song info
     api = CloudApi()
@@ -71,7 +69,6 @@ def download_song_by_song(song, download_folder, sub_folder=True):
         print('Mp3 file already download:', song_file_name)
         return
 
-    # download song
 
     #download_lrc
     lrc = api.get_lrc(song_id)
@@ -106,15 +103,7 @@ def download_song_by_song(song, download_folder, sub_folder=True):
         download_file(cover_url, cover_file_name, song_download_folder)
 
         # resize cover
-        #img = os.path.join(song_download_folder, cover_file_name)
-        #print(img)
-        #img = io.imread(img,as_gray=True)
-        #print(img)
-        #img = io.imread(img)
-        #img = transform.resize(img, (80, 60))
-        #print(img.shape)
         resize_img(os.path.join(song_download_folder, cover_file_name))
-        #resize_img()
 
         # add metadata for song
         song_file_path = os.path.join(song_download_folder, song_file_name)
